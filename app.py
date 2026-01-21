@@ -40,6 +40,7 @@ if check_password():
         "Electric Power Source(Generator)": ["Electric Utility", "Generator", "Solar Power System"],
         "Electric Power Distribution": ["ATS", "Main Breaker", "Distribution Panel", "Power Cable", "Transformer"],
         "UPS System": ["UPS Unit", "UPS Battery Bank", "Inverter"],
+        "Automatic Voltage Regulator": ["Automatic Voltage Regulator"],
         "CCTV System": ["Lane Camera", "Booth Camera", "Road Camera", "PTZ Camera", "NVR/Server"],
         "Auto-Railing System": ["Electrical Motor", "Barrier Controller/MRC board", "Loop Detector", "Arm"],
         "HVAC System": ["Air Conditioning Unit", "Ventilation Fan", "Chiller"],
@@ -298,6 +299,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
