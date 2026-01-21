@@ -18,7 +18,7 @@ def check_password():
             st.session_state["password_correct"] = False
 
     if "password_correct" not in st.session_state:
-        st.markdown("<div style='text-align: center; padding: 20px;'><h2 style='color: #1e3a8a;'>AAE Electro Mechanical Asset Portal</h2><p>AAE Electromechanical Asset Master Database</p></div>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: center; padding: 20px;'><h2 style='color: #1e3a8a;'>MH Electro Mechanical Asset Portal</h2><p>MH Electromechanical Asset Master Database</p></div>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns([1,2,1])
         with col2:
             st.text_input("Username", key="username")
@@ -76,7 +76,7 @@ if check_password():
         "General": ["Visual Inspection", "Cleaning", "Tightening Connections", "Lubrication", "Functionality Test"]
     }
 
-    LOCATIONS = ["KM2", "KM16", "KM33", "KM52", "KM60A", "KM60B", "KM64", "KM78", "Along roadside", "others"]
+    LOCATIONS = ["Modjo", "Koka", "Bote", "Maki", "Batu", "Along roadside", "others"]
 
     def init_connection():
         scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
@@ -138,7 +138,7 @@ if check_password():
         }
         </style>
         <div class="main-header">
-            <h1 style="margin:0; font-size: 24px;">AAE ELECTRO-MECHANICAL ASSET PORTAL</h1>
+            <h1 style="margin:0; font-size: 24px;">MH ELECTRO-MECHANICAL ASSET PORTAL</h1>
             <p style="margin:0; opacity: 0.9;">Strategic EM Asset Management & PM/RCA Dashboard</p>
         </div>
     """, unsafe_allow_html=True)
@@ -298,6 +298,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
