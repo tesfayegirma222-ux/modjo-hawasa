@@ -38,7 +38,7 @@ def check_password():
 if check_password():
     AAE_STRUCTURE = {
         "Electric Power Source(Generator)": ["Electric Utility", "Generator", "Solar Power System"],
-        "Electric Power Distribution": ["ATS", "Main Breaker", "Distribution Panel", "Power Cable", "Transformer"],
+        "Electric Power Distribution": ["Main power Distribution Box", "Toll power distribution box", "Road light distribution box", "Power Cable 3*2.5mm", "Power Cable 4*16mm", "Power Cable 3*10mm", "Power Cable 2*1.5mm"],
         "UPS System": ["UPS Unit", "UPS Battery Bank", "Inverter"],
         "Automatic Voltage Regulator": ["Automatic Voltage Regulator"],
         "CCTV System": ["Lane Camera", "Booth Camera", "Road Camera", "PTZ Camera", "NVR/Server"],
@@ -299,6 +299,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
