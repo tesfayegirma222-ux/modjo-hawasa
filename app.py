@@ -44,7 +44,7 @@ if check_password():
         "CCTV System": ["Lane Camera", "Booth Camera", "Road Camera", "PTZ Camera", "NVR/Server"],
         "Auto-Railing System": ["Electrical Motor", "Barrier Controller/MRC board", "Loop Detector", "Arm"],
         "HVAC System": ["Air Conditioning Unit", "Ventilation Fan", "Chiller"],
-        "Illumination System": ["High Mast Light", "Road Light", "Booth Light", "Plaza Light", "Photocell Controller"],
+        "Illumination System": ["High Mast Light pole", "Road Light pole", "Booth Light 11w", "Plaza Light 250w", "Photocell Controller", "road light led 1150w", "compund light 45w"],
         "Electronic Display System": ["VMS", "LED Notice Board", "Money Fee Display", "Passage Signal Lamp", "Fog Light", "Canopy Light"],
         "Pump System": ["Surface Water Pump", "Submersible Pump", "Fire Pump", "Pump Controller"],
         "Overload System (WIM)": ["Weight-In-Motion Sensor", "WIM Controller", "Inductive Loop", "Charging Controller"]
@@ -299,6 +299,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
