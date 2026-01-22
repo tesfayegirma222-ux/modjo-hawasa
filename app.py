@@ -116,7 +116,7 @@ if check_password():
                 df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
         return df
 
-    st.set_page_config(page_title="MH EM Asset Portal", layout="wide")
+    st.set_page_config(page_title="MH EM Asset Portal", layout="wide", page_icon="🟢")
     
     # --- SIDEBAR LOGOS ---
     logo_url = "https://inquisitive-azure-n8rlqionj0.edgeone.app/asset.jpg"
@@ -299,6 +299,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
