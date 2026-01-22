@@ -54,7 +54,8 @@ if check_password():
         "ITS/low voltage swich board": ["Toll exit lane booth panel type 1", "Toll exit lane booth panel type 2", "Plaza  ancillary building panel", "Electrical cabinet", "Toll plaza main building panel", "Modjo etc point of sale(pos)panel", "Weight control building panel"],
         "Overload System (WIM)": ["WIM"],
         "Weather System (WS)": ["WS"],
-        "Variable Message Sign System (VIM)": ["VIM"]
+        "Variable Message Sign System (VIM)": ["VIM"],
+        "ITS/CCTV System": ["PTZ Camera", "Pole 10m", "Pole 15m"]
         }
 
     RCA_STANDARDS = {
@@ -306,6 +307,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
