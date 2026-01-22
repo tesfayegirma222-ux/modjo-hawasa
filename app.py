@@ -48,6 +48,8 @@ if check_password():
         "Electronic Display System": ["VMS", "LED Notice Board", "Money Fee Display", "Passage Signal Lamp", "Fog Light", "Canopy Light"],
         "Pump System": ["Surface Water Pump", "Submersible Pump", "Fire Pump", "Pump Controller"],
         "ITS/Step down transformer": ["Single phase step up transformer(3kva)"],
+        "ITS/Solar system": ["Solar panel 24 vdc 400w", "Solar charge controller 24vdc 20a", "Batteries bank 24vdc 260ah", "Batteries bank 24vdc 260ah", "Ductbank 2 tubes 110mm diameter 9octagonal(SUPPORT)"],
+        "ITS/Low voltage cables": ["1*4mm2  cable", "1*6mm2 cable", "1*10 mm2 cable", "1*16 mm2 cable", "1*25 mm2 cable", "1*35 mm2 cable", "1*50 mm2 cable", "1*70 mm2 cable", "1*95 mm2 cable", "1*150 mm2 cable", "cabinet low voltage masses earthing", "Earthing for pv solar system"],
         "ITS/UPS": ["UPS(2.5KVA)", "UPS ONLINE 2CONV TRI-25KVA 60 MINUTES", "UPS ONLINE 2CONV TRI-30KVA 60 MINUTES", "UPS ONLINE 2CONV TRI-20KVA 60 MINUTES", "UPS ONLINE 2CONV TRI-10KVA 60 MINUTES"],
         "ITS/low voltage swich board": ["Toll exit lane booth panel type 1", "Toll exit lane booth panel type 2", "Plaza  ancillary building panel", "Electrical cabinet", "Toll plaza main building panel", "Modjo etc point of sale(pos)panel", "Weight control building panel"],
         "Overload System (WIM)": ["Weight-In-Motion Sensor", "WIM Controller", "Inductive Loop", "Charging Controller"]
@@ -302,6 +304,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
