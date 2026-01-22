@@ -56,7 +56,7 @@ if check_password():
         "Weather System (WS)": ["WS"],
         "Variable Message Sign System (VIM)": ["VIM"],
         "ITS/CCTV System": ["PTZ Camera", "Pole 10m", "Pole 15m"]
-        }
+    }
 
     RCA_STANDARDS = {
         "Electric Power Source(Generator)": ["Fuel Contamination", "AVR Failure", "Battery Dead", "Utility Outage", "Aging"],
@@ -129,7 +129,6 @@ if check_password():
     # --- SIDEBAR LOGOS ---
     logo_url = "https://inquisitive-azure-n8rlqionj0.edgeone.app/asset.jpg"
     st.sidebar.image(logo_url, use_container_width=True)
-      # --- SIDEBAR LOGO ---
     logo_url = "https://physical-magenta-dzvxdrxnhh.edgeone.app/electrical.jpg"
     st.sidebar.image(logo_url, use_container_width=True)
 
@@ -178,6 +177,8 @@ if check_password():
             k1, k2, k3, k4, k5 = st.columns(5)
             k1.metric("💰 Portfolio Value", display_val, help=f"Exact Value: {total_val:,.2f} Br")
             k2.metric("📦 Active Assets", int(df_inv[q_col].sum()))
+            
+            # Global Health Index
             health_idx = (df_inv[f_col].sum() / df_inv[q_col].sum() * 100) if df_inv[q_col].sum() > 0 else 0
             k3.metric("🏥 Health Index", f"{health_idx:.1f}%")
             k4.metric("🛠️ Failures Logged", len(df_maint) if not df_maint.empty else 0)
@@ -206,16 +207,19 @@ if check_password():
 
             st.divider()
 
+            # --- UPDATED HEALTH INDEX BY CATEGORY SECTION ---
             col_h1, col_h2 = st.columns(2)
             with col_h1:
-                st.markdown("#### ⚡ System Health")
+                st.markdown("#### ⚡ System Health (Functional % per Category)")
+                # Calculate: sum of functional divided by sum of quantity for each category
                 h_df = df_inv.groupby(c_col).agg({q_col: 'sum', f_col: 'sum'}).reset_index()
                 h_df['Health %'] = (h_df[f_col] / h_df[q_col] * 100).round(1).fillna(0)
-                # UPDATED: color=c_col gives each category bar its own distinct color
+                
                 fig_bar = px.bar(h_df.sort_values('Health %'), x='Health %', y=c_col, orientation='h', text='Health %', color=c_col)
                 fig_bar.update_traces(texttemplate='%{text}%', textposition='outside')
-                fig_bar.update_layout(showlegend=False)
+                fig_bar.update_layout(showlegend=False, xaxis_title="Functional %", yaxis_title="Category")
                 st.plotly_chart(fig_bar, use_container_width=True)
+            
             with col_h2:
                 st.markdown("#### 💎 Valuation by Subsystem")
                 fig_pie = px.pie(df_inv, values=v_col, names=s_col, hole=0.5)
@@ -239,7 +243,6 @@ if check_password():
                 else: st.info("No failure logs.")
 
             with col_r2:
-                # --- UPDATED PM CHART: Grouped by Category with Activity Labels ---
                 if not df_prev.empty:
                     pm_data = df_prev.groupby(['Category', 'Task Performed']).size().reset_index(name='Count')
                     pm_cat_totals = df_prev.groupby('Category').size().reset_index(name='Total_PM')
@@ -307,6 +310,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
