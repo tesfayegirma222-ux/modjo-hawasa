@@ -174,13 +174,21 @@ if check_password():
             elif total_val >= 1_000: display_val = f"{total_val/1_000:.1f}K Br"
             else: display_val = f"{total_val:,.0f} Br"
 
+            # --- CALCULATE PER-CATEGORY HEALTH FIRST ---
+            cat_health = df_inv.groupby(c_col).agg({q_col: 'sum', f_col: 'sum'}).reset_index()
+            cat_health['Category %'] = (cat_health[f_col] / cat_health[q_col] * 100).fillna(0)
+            
+            # --- NEW GLOBAL HEALTH INDEX CALCULATION ---
+            # Sum of all category percentages divided by number of categories
+            if len(cat_health) > 0:
+                global_health_idx = cat_health['Category %'].mean()
+            else:
+                global_health_idx = 0
+
             k1, k2, k3, k4, k5 = st.columns(5)
             k1.metric("💰 Portfolio Value", display_val, help=f"Exact Value: {total_val:,.2f} Br")
             k2.metric("📦 Active Assets", int(df_inv[q_col].sum()))
-            
-            # Global Health Index
-            health_idx = (df_inv[f_col].sum() / df_inv[q_col].sum() * 100) if df_inv[q_col].sum() > 0 else 0
-            k3.metric("🏥 Health Index", f"{health_idx:.1f}%")
+            k3.metric("🏥 Health Index", f"{global_health_idx:.1f}%") # Updated Metric
             k4.metric("🛠️ Failures Logged", len(df_maint) if not df_maint.empty else 0)
             k5.metric("📅 PM Activities", len(df_prev) if not df_prev.empty else 0)
 
@@ -207,19 +215,14 @@ if check_password():
 
             st.divider()
 
-            # --- UPDATED HEALTH INDEX BY CATEGORY SECTION ---
             col_h1, col_h2 = st.columns(2)
             with col_h1:
-                st.markdown("#### ⚡ System Health (Functional % per Category)")
-                # Calculate: sum of functional divided by sum of quantity for each category
-                h_df = df_inv.groupby(c_col).agg({q_col: 'sum', f_col: 'sum'}).reset_index()
-                h_df['Health %'] = (h_df[f_col] / h_df[q_col] * 100).round(1).fillna(0)
-                
-                fig_bar = px.bar(h_df.sort_values('Health %'), x='Health %', y=c_col, orientation='h', text='Health %', color=c_col)
-                fig_bar.update_traces(texttemplate='%{text}%', textposition='outside')
-                fig_bar.update_layout(showlegend=False, xaxis_title="Functional %", yaxis_title="Category")
+                st.markdown("#### ⚡ System Health")
+                # Using the previously calculated cat_health for the chart
+                fig_bar = px.bar(cat_health.sort_values('Category %'), x='Category %', y=c_col, orientation='h', text='Category %', color=c_col)
+                fig_bar.update_traces(texttemplate='%{text:.1f}%', textposition='outside')
+                fig_bar.update_layout(showlegend=False, xaxis_title="Health % (Functional / Total Quantity)")
                 st.plotly_chart(fig_bar, use_container_width=True)
-            
             with col_h2:
                 st.markdown("#### 💎 Valuation by Subsystem")
                 fig_pie = px.pie(df_inv, values=v_col, names=s_col, hole=0.5)
@@ -310,6 +313,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
