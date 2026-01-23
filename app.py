@@ -146,8 +146,8 @@ if check_password():
         }
         </style>
         <div class="main-header">
-            <h1 style="margin:0; font-size: 24px;">Thank you to Udacity!
-                                        MH ELECTRO-MECHANICAL ASSET PORTAL</h1>
+            <h1 style="margin:0; font-size: 24px;">Thank you to Udacity!</h1>
+            <h1 style="margin:0; font-size: 24px;">MH ELECTRO-MECHANICAL ASSET PORTAL</h1>
             <p style="margin:0; opacity: 0.9;">Strategic EM Asset Management & PM/RCA Dashboard</p>
         </div>
     """, unsafe_allow_html=True)
@@ -314,6 +314,7 @@ if check_password():
         if st.button("💾 Sync Database"):
             inv_ws.update([edited_df.columns.values.tolist()] + edited_df.values.tolist())
             st.success("Database synced!"); st.rerun()
+
 
 
 
